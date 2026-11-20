@@ -1,0 +1,58 @@
+# LLaMA-Factory SFT 配置：Qwen2.5-7B-Instruct + 农业病虫害防治 LoRA
+# 使用前请确认：
+#   1) 已把 Qwen2.5-7B-Instruct 下载到 models/Qwen2.5-7B-Instruct；
+#   2) training/lora/dataset_info.json 已按 README 注册 agri_pest_sft；
+#   3) 在项目根目录执行：llamafactory-cli train training/lora/llamafactory_sft.yaml
+
+### 模型
+model_name_or_path: models/Qwen2.5-7B-Instruct
+trust_remote_code: true
+
+### 训练方式：LoRA SFT
+stage: sft
+do_train: true
+finetuning_type: lora
+
+### LoRA 结构
+# rank=16：领域风格与五段式格式适配，参数量约占 7B 的 0.2%–0.5%
+lora_rank: 16
+# alpha=2×rank，缩放系数 alpha/rank=2，收敛更稳
+lora_alpha: 32
+lora_dropout: 0.05
+# lora_target 即 PEFT 的 target_modules：覆盖注意力与 MLP 的全部线性层
+# 显存紧张时可只保留 q_proj,k_proj,v_proj,o_proj
+lora_target: q_proj,k_proj,v_proj,o_proj,gate_proj,up_proj,down_proj
+
+### 数据
+# dataset_info.json 与 agri_pest_sft.jsonl 放在该目录
+dataset_dir: training/lora
+dataset: agri_pest_sft
+template: qwen
+cutoff_len: 1024
+max_samples: 10000
+overwrite_cache: true
+preprocessing_num_workers: 4
+# 小样本示例数据默认不做验证集切分；正式数据扩充到 1000 条以上后改为 0.05
+val_size: 0.0
+
+### 输出
+output_dir: models/qwen_agri_lora
+logging_steps: 5
+save_steps: 50
+save_total_limit: 2
+plot_loss: true
+overwrite_output_dir: false
+report_to: none
+
+### 优化器与显存
+# 单卡 24G：batch 2 × 梯度累积 8 = 等效 batch 16
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-4
+num_train_epochs: 3
+lr_scheduler_type: cosine
+warmup_ratio: 0.03
+bf16: true
+gradient_checkpointing: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null

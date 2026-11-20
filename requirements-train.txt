@@ -1,0 +1,7 @@
+# LoRA 微调依赖（与运行时解耦，单独环境安装）
+torch>=2.4
+transformers>=4.44,<5
+peft>=0.13,<1
+accelerate>=1.0,<2
+datasets>=3.0,<4
+llama-factory>=0.9

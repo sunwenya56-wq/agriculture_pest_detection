@@ -1,0 +1,38 @@
+{
+  "current_model": "yolov11_best",
+  "models": [
+    {
+      "name": "yolov11_best",
+      "path": "models\\best.pt",
+      "type": "yolo",
+      "description": "YOLOv11 病虫害检测模型（12 类）",
+      "version": "1.0",
+      "input_size": [640, 640],
+      "classes": [
+        "蓖麻蚕（或蓖麻夜蛾）",
+        "田蟋蟀",
+        "甜菜夜蛾",
+        "肥大白蚁（或稻白蚁）",
+        "二斑叶螨（红蜘蛛类）",
+        "地老虎（切根虫）",
+        "双色天牛（或甘蔗天牛）",
+        "黄麻茎象甲",
+        "尺蠖（或尺蛾）",
+        "条纹跳甲（或条脊萤叶甲）",
+        "拟粉蚧（粉蚧类害虫）",
+        "铜绿实夜蛾（棉铃虫近缘种）"
+      ],
+      "metrics": {
+        "mAP@0.5": 0.923,
+        "source": "ultralytics-main/runs/detect/train4/results.csv",
+        "epochs": 10,
+        "imgsz": 128,
+        "backbone": "yolo11n"
+      },
+      "accuracy": 0.923,
+      "sha256": "BF50AAA7559D97C7B25EAE6FE9769A58DB84F0C369435E3F693104DAF98B7DA9",
+      "size_bytes": 5418003,
+      "enabled": true
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+# 密钥与本地配置
+.env
+.env.local
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# 构建产物
+build/
+dist/
+*.spec.bak
+
+# 第三方源码与训练输出（避免 AGPL 源码混入交付仓库）
+ultralytics-main/
+
+# 模型权重与数据（体积大，走制品库/网盘）
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# 运行期产物
+logs/
+exports/
+history.db
+runs/
+error.log
+memory/
+.pytest_cache/
+.ruff_cache/
+
+# 演示素材
+*.mp4

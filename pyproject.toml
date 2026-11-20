@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agriculture-pest-detection"
+version = "1.0.0"
+description = "智慧农业病虫害识别与防治系统（YOLOv11 + Qwen + PyQt6）"
+requires-python = ">=3.10"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+exclude = ["ultralytics-main", "build", "dist", "exports", "models"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+"app/api/server.py" = ["B008"]  # FastAPI 依赖注入的标准写法
